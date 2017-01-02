@@ -20,7 +20,7 @@ class RedisTest extends TestCase
             ->expects($this->once())
             ->method('get')
             ->with('someKey')
-            ->willReturn('myValue');
+            ->willReturn(serialize('myValue'));
 
         $redis = new Redis($mockClient);
         $this->assertEquals('myValue', $redis->get('someKey'));
@@ -149,7 +149,7 @@ class RedisTest extends TestCase
 
         $mockClient
             ->method('get')
-            ->willReturn('someValue');
+            ->willReturn(serialize('someValue'));
 
         $redis = new Redis($mockClient);
         $this->assertCount(2, $redis->getMultiple($values));
