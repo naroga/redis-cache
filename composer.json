@@ -1,5 +1,5 @@
 {
-    "name": "naroga/psr16-redis",
+    "name": "naroga/redis-cache",
     "description": "A Redis driver that implements PSR-16 (Simple Cache)",
     "license": "MIT",
     "authors": [
