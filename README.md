@@ -1,6 +1,6 @@
 # Redis Cache
 
-[![Build status](https://travis-ci.org/naroga/redis-cache.svg?branch=master)]((https://travis-ci.org/naroga/redis-cache)) [![Coverage Status](https://coveralls.io/repos/github/naroga/redis-cache/badge.svg?branch=master)](https://coveralls.io/github/naroga/redis-cache?branch=master)]
+[![Build status](https://travis-ci.org/naroga/redis-cache.svg?branch=master)](https://travis-ci.org/naroga/redis-cache) [![Coverage Status](https://coveralls.io/repos/github/naroga/redis-cache/badge.svg?branch=master)](https://coveralls.io/github/naroga/redis-cache?branch=master)
 
 This is a simple Redis driver that implements PSR-16.
 
