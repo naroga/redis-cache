@@ -35,7 +35,7 @@ class Redis implements CacheInterface
             throw new InvalidArgumentException("Provided key is not a legal string.");
         }
 
-        $item = $this->client->get($this->canonicalize($key));
+        $item = unserialize($this->client->get($this->canonicalize($key)));
 
         if (!empty($item)) {
             return $item;
