@@ -4,5 +4,4 @@ php:
 install:
     - composer install
 script:
-    - cp phpunit.xml.dist phpunit.xml
     - phpunit
