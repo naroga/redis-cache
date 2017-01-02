@@ -290,4 +290,36 @@ class RedisTest extends TestCase
         $redis = new Redis(new Client);
         $redis->delete(new \stdClass);
     }
+
+    public function testSetMultipleWithFailedTransaction()
+    {
+        $mockClient = $this
+            ->getMockBuilder(Client::class)
+            ->setMethods(['set'])
+            ->getMock();
+
+        $mockClient
+            ->method('set')
+            ->willReturn(false);
+
+
+        $redis = new Redis($mockClient);
+        $this->assertFalse($redis->setMultiple(['key1' => 'value1', 'key2' => 'value2']));
+    }
+
+
+    public function testDeleteMultipleWithFailedTransaction()
+    {
+        $mockClient = $this
+            ->getMockBuilder(Client::class)
+            ->setMethods(['del'])
+            ->getMock();
+
+        $mockClient
+            ->method('del')
+            ->willReturn(false);
+
+        $redis = new Redis($mockClient);
+        $this->assertFalse($redis->deleteMultiple(['key1', 'key2']));
+    }
 }
