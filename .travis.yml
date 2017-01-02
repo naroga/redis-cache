@@ -6,4 +6,4 @@ install:
 script:
     - php vendor/bin/phpunit --bootstrap vendor/autoload.php -c ./phpunit.xml ./Tests
 after_script:
-    - php bin/coveralls -v
+    - php vendor/bin/coveralls -v
