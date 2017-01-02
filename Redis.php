@@ -5,6 +5,7 @@ namespace Naroga\RedisCache;
 use Naroga\RedisCache\Exception\InvalidArgumentException;
 use Naroga\RedisCache\Exception\TransactionFailedException;
 use Predis\Client;
+use Predis\ClientInterface;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\DateInterval;
 
@@ -20,11 +21,11 @@ class Redis implements CacheInterface
     /**
      * Redis constructor.
      *
-     * @param array ...$args
+     * @param ClientInterface $client A Predis Client.
      */
-    public function __construct(...$args)
+    public function __construct(ClientInterface $client)
     {
-        $this->client = new Client($args);
+        $this->client = $client;
     }
 
     /** @inheritDoc */
@@ -86,7 +87,7 @@ class Redis implements CacheInterface
             throw new InvalidArgumentException("Provided key is not a legal string.");
         }
 
-        return $this->client->del($this->canonicalize($key)) > 0;
+        return $this->client->del($this->canonicalize($key)) == 1;
     }
 
     /** @inheritDoc */
@@ -100,7 +101,7 @@ class Redis implements CacheInterface
     /** @inheritDoc */
     public function getMultiple($keys, $default = null)
     {
-        if (!is_array($keys) && $keys instanceof \Traversable) {
+        if (!is_array($keys) && !$keys instanceof \Traversable) {
             throw new InvalidArgumentException("Keys must be an array or a \\Traversable instance.");
         }
 
@@ -109,13 +110,13 @@ class Redis implements CacheInterface
             $result[] = $this->get($key, $default);
         }
 
-        return true;
+        return $result;
     }
 
     /** @inheritDoc */
     public function setMultiple($values, $ttl = null)
     {
-        if (!is_array($keys) && $keys instanceof \Traversable) {
+        if (!is_array($values) && !$values instanceof \Traversable) {
             throw new InvalidArgumentException("Values must be an array or a \\Traversable instance.");
         }
 
@@ -139,7 +140,7 @@ class Redis implements CacheInterface
     /** @inheritDoc */
     public function deleteMultiple($keys)
     {
-        if (!is_array($keys) && $keys instanceof \Traversable) {
+        if (!is_array($keys) && !$keys instanceof \Traversable) {
             throw new InvalidArgumentException("Keys must be an array or a \\Traversable instance.");
         }
 
@@ -163,6 +164,10 @@ class Redis implements CacheInterface
     /** @inheritDoc */
     public function has($key)
     {
+        if (!is_string($key)) {
+            throw new InvalidArgumentException("Provided key is not a legal string.");
+        }
+
         return $this->client->exists($this->canonicalize($key)) === 1;
     }
 

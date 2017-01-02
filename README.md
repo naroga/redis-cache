@@ -14,8 +14,7 @@ That's it.
 
 ## Usage
 
-`naroga/redis-cache` extends `predis/predis`, so the client
-object should be constructed with the same parameters as `predis/predis`.
+`naroga/redis-cache` should be constructed with a `predis/predis` client.
 
 You can check [Predis' documentation here](https://github.com/nrk/predis#connecting-to-redis).
 
@@ -32,7 +31,7 @@ $config = [
     'port' => 6379
 ]
 
-$redis = new Redis($config);
+$redis = new Redis(new Predis\Client($config));
 
 if (!$redis->has('myKey')) {
     $redis->set('myKey', 'myValue', 1800); //Just call any PSR-16 methods here.

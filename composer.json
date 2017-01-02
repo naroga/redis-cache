@@ -1,11 +1,6 @@
 {
     "name": "naroga/psr16-redis",
     "description": "A Redis driver that implements PSR-16 (Simple Cache)",
-    "type": "library",
-    "require": {
-        "predis/predis": "^1.1",
-        "psr/simple-cache": "^0.3.0"
-    },
     "license": "MIT",
     "authors": [
         {
@@ -13,6 +8,14 @@
             "email": "pedro.cordeiro@sympla.com.br"
         }
     ],
+    "type": "library",
+    "require": {
+        "predis/predis": "^1.1",
+        "psr/simple-cache": "^0.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
     "autoload": {
         "psr-4": {
             "Naroga\\RedisCache\\": "."
