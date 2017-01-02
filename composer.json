@@ -14,7 +14,9 @@
         "psr/simple-cache": "^0.3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "phpunit/php-code-coverage":"~4.0",
+        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-4": {
