@@ -1,0 +1,21 @@
+{
+    "name": "naroga/psr16-redis",
+    "description": "A Redis driver that implements PSR-16 (Simple Cache)",
+    "type": "library",
+    "require": {
+        "predis/predis": "^1.1",
+        "psr/simple-cache": "^0.3.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pedro Cordeiro",
+            "email": "pedro.cordeiro@sympla.com.br"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Naroga\\RedisCache"
+        }
+    }
+}
