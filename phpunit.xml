@@ -16,7 +16,7 @@
 
     <testsuites>
         <testsuite name="Naroga Redis Cache Test Suite">
-            <directory>./Tests/</directory>
+            <directory>./</directory>
         </testsuite>
     </testsuites>
 
@@ -25,7 +25,6 @@
             <directory>./</directory>
             <exclude>
                 <directory>./Tests/</directory>
-                <directory>./vendor</directory>
             </exclude>
         </whitelist>
     </filter>
