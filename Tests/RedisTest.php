@@ -281,4 +281,13 @@ class RedisTest extends TestCase
         $redis = new Redis(new Client);
         $redis->has(new \stdClass());
     }
+
+    /**
+     * @expectedException \Naroga\RedisCache\Exception\InvalidArgumentException
+     */
+    public function testDelWithIllegalKey()
+    {
+        $redis = new Redis(new Client);
+        $redis->delete(new \stdClass);
+    }
 }
