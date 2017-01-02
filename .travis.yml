@@ -4,6 +4,6 @@ php:
 install:
     - composer install
 script:
-    - php vendor/bin/phpunit .
+    - phpunit .
 after_script:
     - php bin/coveralls -v
