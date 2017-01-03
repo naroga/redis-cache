@@ -128,8 +128,6 @@ class Redis implements CacheInterface
                     }
                 }
             });
-
-            $responses->execute();
         } catch (TransactionFailedException $e) {
             return false;
         }
@@ -152,8 +150,6 @@ class Redis implements CacheInterface
                     }
                 }
             });
-
-            $transaction->execute();
         } catch (TransactionFailedException $e) {
             return false;
         }
