@@ -26,6 +26,7 @@ You can check [Predis' documentation here](https://github.com/nrk/predis#connect
 require_once "vendor/autoload.php";
 
 use Naroga\RedisCache\Redis;
+use Predis\Client;
 
 $config = array(
     'scheme' => 'tcp',
@@ -33,7 +34,7 @@ $config = array(
     'port' => 6379
 );
 
-$redis = new Redis(new Predis\Client($config));
+$redis = new Redis(new Client($config));
 
 if (!$redis->has('myKey')) {
     $redis->set('myKey', 'myValue', 1800); //Just call any PSR-16 methods here.
