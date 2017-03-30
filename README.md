@@ -27,11 +27,11 @@ require_once "vendor/autoload.php";
 
 use Naroga\RedisCache\Redis;
 
-$config = [
+$config = array(
     'scheme' => 'tcp',
     'host' => 'localhost',
     'port' => 6379
-]
+);
 
 $redis = new Redis(new Predis\Client($config));
 
