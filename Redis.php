@@ -128,8 +128,7 @@ class Redis implements CacheInterface
                     if (!$redis->set($key, $value, $ttl)) {
                         throw new TransactionFailedException();
                     }
-                }
-            });
+            }});
         } catch (TransactionFailedException $e) {
             return false;
         }
@@ -151,8 +150,7 @@ class Redis implements CacheInterface
                     if (!$redis->delete($key)) {
                         throw new TransactionFailedException();
                     }
-                }
-            });
+             }});
         } catch (TransactionFailedException $e) {
             return false;
         }
