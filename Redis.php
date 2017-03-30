@@ -145,9 +145,10 @@ class Redis implements CacheInterface
         }
 
         try {
-            $transaction = $this->client->transaction(function ($tx) use ($keys) {
+            $redis = $this;
+            $transaction = $this->client->transaction(function ($tx) use ($keys, $redis) {
                 foreach ($keys as $key) {
-                    if (!$this->delete($key)) {
+                    if (!$redis->delete($key)) {
                         throw new TransactionFailedException();
                     }
                 }
