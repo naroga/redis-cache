@@ -15,7 +15,7 @@
         "psr/simple-cache": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
+        "phpunit/phpunit": "3.7.38",
         "phpunit/php-code-coverage":"~4.0",
         "satooshi/php-coveralls": "dev-master"
     },
