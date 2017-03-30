@@ -14,7 +14,7 @@ class RedisTest extends TestCase
     public function testGetWithLegalValue()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('get'))
             ->getMock();
 
@@ -31,7 +31,7 @@ class RedisTest extends TestCase
     public function testGetWithDefaultValue()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('get'))
             ->getMock();
 
@@ -57,7 +57,7 @@ class RedisTest extends TestCase
     public function testSetWithLegalValue()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('set'))
             ->getMock();
 
@@ -91,7 +91,7 @@ class RedisTest extends TestCase
     public function testSetWithDateIntervalTTL()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('setex'))
             ->getMock();
 
@@ -107,7 +107,7 @@ class RedisTest extends TestCase
     public function testSetWithIntegerTTL()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('setex'))
             ->getMock();
 
@@ -123,7 +123,7 @@ class RedisTest extends TestCase
     public function testDelete()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('del'))
             ->getMock();
 
@@ -145,7 +145,7 @@ class RedisTest extends TestCase
 
 
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('get'))
             ->getMock();
 
@@ -170,7 +170,7 @@ class RedisTest extends TestCase
     {
 
         $mockTransaction = $this
-            ->getMockBuilder(TransactionMulti::class)
+            ->getMockBuilder('Predis\Command\TransactionMulti')
             ->setMethods(array('execute'))
             ->getMock();
 
@@ -179,7 +179,7 @@ class RedisTest extends TestCase
             ->willReturn(true);
 
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('set', 'transaction'))
             ->getMock();
 
@@ -211,7 +211,7 @@ class RedisTest extends TestCase
     public function testDeleteMultipleWithLegalKeys()
     {
         $mockTransaction = $this
-            ->getMockBuilder(TransactionMulti::class)
+            ->getMockBuilder('Predis\Command\TransactionMulti')
             ->setMethods(array('execute'))
             ->getMock();
 
@@ -220,7 +220,7 @@ class RedisTest extends TestCase
             ->willReturn(true);
 
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('del', 'transaction'))
             ->getMock();
 
@@ -248,7 +248,7 @@ class RedisTest extends TestCase
     public function testClear()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('flushdb'))
             ->getMock();
 
@@ -263,7 +263,7 @@ class RedisTest extends TestCase
     public function testHas()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('exists'))
             ->getMock();
 
@@ -296,7 +296,7 @@ class RedisTest extends TestCase
     public function testSetMultipleWithFailedTransaction()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('set'))
             ->getMock();
 
@@ -313,7 +313,7 @@ class RedisTest extends TestCase
     public function testDeleteMultipleWithFailedTransaction()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
+            ->getMockBuilder('Predis\Client')
             ->setMethods(array('del'))
             ->getMock();
 
