@@ -8,6 +8,7 @@ use Predis\Client;
 use Predis\ClientInterface;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\DateInterval;
+use Traversable;
 
 /**
  * Class Redis
@@ -101,11 +102,11 @@ class Redis implements CacheInterface
     /** @inheritDoc */
     public function getMultiple($keys, $default = null)
     {
-        if (!is_array($keys) && !$keys instanceof \Traversable) {
+        if (!is_array($keys) && !$keys instanceof Traversable) {
             throw new InvalidArgumentException("Keys must be an array or a \\Traversable instance.");
         }
 
-        $result = [];
+        $result = array();
         foreach ($keys as $key) {
             $result[$key] = $this->get($key, $default);
         }
@@ -116,18 +117,18 @@ class Redis implements CacheInterface
     /** @inheritDoc */
     public function setMultiple($values, $ttl = null)
     {
-        if (!is_array($values) && !$values instanceof \Traversable) {
+        if (!is_array($values) && !$values instanceof Traversable) {
             throw new InvalidArgumentException("Values must be an array or a \\Traversable instance.");
         }
 
         try {
-            $responses = $this->client->transaction(function ($tx) use ($values, $ttl) {
+            $redis = $this;
+            $responses = $this->client->transaction(function ($tx) use ($values, $ttl, $redis) {
                 foreach ($values as $key => $value) {
-                    if (!$this->set($key, $value, $ttl)) {
+                    if (!$redis->set($key, $value, $ttl)) {
                         throw new TransactionFailedException();
                     }
-                }
-            });
+            }});
         } catch (TransactionFailedException $e) {
             return false;
         }
@@ -138,18 +139,18 @@ class Redis implements CacheInterface
     /** @inheritDoc */
     public function deleteMultiple($keys)
     {
-        if (!is_array($keys) && !$keys instanceof \Traversable) {
+        if (!is_array($keys) && !$keys instanceof Traversable) {
             throw new InvalidArgumentException("Keys must be an array or a \\Traversable instance.");
         }
 
         try {
-            $transaction = $this->client->transaction(function ($tx) use ($keys) {
+            $redis = $this;
+            $transaction = $this->client->transaction(function ($tx) use ($keys, $redis) {
                 foreach ($keys as $key) {
-                    if (!$this->delete($key)) {
+                    if (!$redis->delete($key)) {
                         throw new TransactionFailedException();
                     }
-                }
-            });
+             }});
         } catch (TransactionFailedException $e) {
             return false;
         }

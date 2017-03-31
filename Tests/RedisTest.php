@@ -2,18 +2,20 @@
 
 namespace Naroga\RedisCache\Tests;
 
+use DateInterval;
 use Naroga\RedisCache\Redis;
 use PHPUnit\Framework\TestCase;
 use Predis\Client;
 use Predis\Command\TransactionMulti;
+use stdClass;
 
 class RedisTest extends TestCase
 {
     public function testGetWithLegalValue()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['get'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('get'))
             ->getMock();
 
         $mockClient
@@ -29,8 +31,8 @@ class RedisTest extends TestCase
     public function testGetWithDefaultValue()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['get'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('get'))
             ->getMock();
 
         $mockClient
@@ -49,14 +51,14 @@ class RedisTest extends TestCase
     public function testGetWithIllegalValue()
     {
         $redis = new Redis(new Client());
-        $redis->get(new \stdClass());
+        $redis->get(new stdClass());
     }
 
     public function testSetWithLegalValue()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['set'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('set'))
             ->getMock();
 
         $mockClient
@@ -74,7 +76,7 @@ class RedisTest extends TestCase
     public function testSetWithIllegalValue()
     {
         $redis = new Redis(new Client);
-        $redis->set(new \stdClass(), 'someValue');
+        $redis->set(new stdClass(), 'someValue');
     }
 
     /**
@@ -83,14 +85,14 @@ class RedisTest extends TestCase
     public function testSetWithIllegalTTL()
     {
         $redis = new Redis(new Client);
-        $redis->set('someKey', 'someValue', new \stdClass());
+        $redis->set('someKey', 'someValue', new stdClass());
     }
 
     public function testSetWithDateIntervalTTL()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['setex'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('setex'))
             ->getMock();
 
         $mockClient
@@ -99,14 +101,14 @@ class RedisTest extends TestCase
             ->willReturn('OK');
 
         $redis = new Redis($mockClient);
-        $this->assertTrue($redis->set('someKey', 'someValue', new \DateInterval('PT100S')));
+        $this->assertTrue($redis->set('someKey', 'someValue', new DateInterval('PT100S')));
     }
 
     public function testSetWithIntegerTTL()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['setex'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('setex'))
             ->getMock();
 
         $mockClient
@@ -121,8 +123,8 @@ class RedisTest extends TestCase
     public function testDelete()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['del'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('del'))
             ->getMock();
 
         $mockClient
@@ -136,15 +138,15 @@ class RedisTest extends TestCase
 
     public function testGetMultipleWithLegalValue()
     {
-        $values = [
+        $values = array(
             'someKey1',
             'someKey2'
-        ];
+        );
 
 
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['get'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('get'))
             ->getMock();
 
         $mockClient
@@ -161,15 +163,15 @@ class RedisTest extends TestCase
     public function testGetMultipleWithIllegalValue()
     {
         $redis = new Redis(new Client);
-        $redis->getMultiple(new \stdClass());
+        $redis->getMultiple(new stdClass());
     }
 
     public function testSetMultipleWithLegalValue()
     {
 
         $mockTransaction = $this
-            ->getMockBuilder(TransactionMulti::class)
-            ->setMethods(['execute'])
+            ->getMockBuilder('Predis\Command\TransactionMulti')
+            ->setMethods(array('execute'))
             ->getMock();
 
         $mockTransaction
@@ -177,8 +179,8 @@ class RedisTest extends TestCase
             ->willReturn(true);
 
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['set', 'transaction'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('set', 'transaction'))
             ->getMock();
 
         $mockClient
@@ -193,7 +195,7 @@ class RedisTest extends TestCase
         $redis = new Redis($mockClient);
 
         $this->assertTrue(
-            $redis->setMultiple(['someKey1' => 'someValue1', 'someKey2' => 'someValue2'])
+            $redis->setMultiple(array('someKey1' => 'someValue1', 'someKey2' => 'someValue2'))
         );
     }
 
@@ -203,14 +205,14 @@ class RedisTest extends TestCase
     public function testSetMultipleWithIllegalValue()
     {
         $redis = new Redis(new Client);
-        $redis->setMultiple(new \stdClass());
+        $redis->setMultiple(new stdClass());
     }
 
     public function testDeleteMultipleWithLegalKeys()
     {
         $mockTransaction = $this
-            ->getMockBuilder(TransactionMulti::class)
-            ->setMethods(['execute'])
+            ->getMockBuilder('Predis\Command\TransactionMulti')
+            ->setMethods(array('execute'))
             ->getMock();
 
         $mockTransaction
@@ -218,8 +220,8 @@ class RedisTest extends TestCase
             ->willReturn(true);
 
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['del', 'transaction'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('del', 'transaction'))
             ->getMock();
 
         $mockClient
@@ -231,7 +233,7 @@ class RedisTest extends TestCase
             ->willReturn($mockTransaction);
 
         $redis = new Redis($mockClient);
-        $this->assertTrue($redis->deleteMultiple(['someKey1', 'someKey2']));
+        $this->assertTrue($redis->deleteMultiple(array('someKey1', 'someKey2')));
     }
 
     /**
@@ -240,14 +242,14 @@ class RedisTest extends TestCase
     public function testDeleteMultipleWithIllegalKeys()
     {
         $redis = new Redis(new Client);
-        $redis->deleteMultiple(new \stdClass());
+        $redis->deleteMultiple(new stdClass());
     }
 
     public function testClear()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['flushdb'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('flushdb'))
             ->getMock();
 
         $mockClient
@@ -261,8 +263,8 @@ class RedisTest extends TestCase
     public function testHas()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['exists'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('exists'))
             ->getMock();
 
         $mockClient
@@ -279,7 +281,7 @@ class RedisTest extends TestCase
     public function testHasWithIllegalKey()
     {
         $redis = new Redis(new Client);
-        $redis->has(new \stdClass());
+        $redis->has(new stdClass());
     }
 
     /**
@@ -288,14 +290,14 @@ class RedisTest extends TestCase
     public function testDelWithIllegalKey()
     {
         $redis = new Redis(new Client);
-        $redis->delete(new \stdClass);
+        $redis->delete(new stdClass);
     }
 
     public function testSetMultipleWithFailedTransaction()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['set'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('set'))
             ->getMock();
 
         $mockClient
@@ -304,15 +306,15 @@ class RedisTest extends TestCase
 
 
         $redis = new Redis($mockClient);
-        $this->assertFalse($redis->setMultiple(['key1' => 'value1', 'key2' => 'value2']));
+        $this->assertFalse($redis->setMultiple(array('key1' => 'value1', 'key2' => 'value2')));
     }
 
 
     public function testDeleteMultipleWithFailedTransaction()
     {
         $mockClient = $this
-            ->getMockBuilder(Client::class)
-            ->setMethods(['del'])
+            ->getMockBuilder('Predis\Client')
+            ->setMethods(array('del'))
             ->getMock();
 
         $mockClient
@@ -320,6 +322,6 @@ class RedisTest extends TestCase
             ->willReturn(false);
 
         $redis = new Redis($mockClient);
-        $this->assertFalse($redis->deleteMultiple(['key1', 'key2']));
+        $this->assertFalse($redis->deleteMultiple(array('key1', 'key2')));
     }
 }
